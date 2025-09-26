@@ -9,9 +9,9 @@ export default function Home(){
     const imc = peso / (altura*altura);
     return (
         <View style={styles.body}>
-            <TextInput placeholder="Digite seu nome"
+            <TextInput placeholder="Digite altura"
             onChangeText={setName}/>
-            <TextInput placeholder="Digite estilo musical"
+            <TextInput placeholder="Digite peso"
             onChangeText={setNome}/>
             <Text style={styles.title}>
              {name}

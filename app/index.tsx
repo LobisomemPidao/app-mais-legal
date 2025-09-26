@@ -3,7 +3,10 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function Home(){
     const [name, setName] = useState(''); //USESTATE DO NOME
+    const altura = Number(name);
     const [nome, setNome] = useState('');
+    const peso = Number(nome);
+    const imc = peso / (altura*altura);
     return (
         <View style={styles.body}>
             <TextInput placeholder="Digite seu nome"
@@ -11,11 +14,13 @@ export default function Home(){
             <TextInput placeholder="Digite estilo musical"
             onChangeText={setNome}/>
             <Text style={styles.title}>
-                EM HOMENAGEM AO FINADO {name}<br/>
-                VAI TER MUITO {nome}<br/>
+             {name}
             </Text>
             <Text>
-                VAI TER MUITO {nome}<br/>
+            {nome}<br/>
+            </Text>
+            <Text>
+            {imc}
             </Text>
         </View>
     );

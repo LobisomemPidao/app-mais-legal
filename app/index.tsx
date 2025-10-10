@@ -1,27 +1,38 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { fetchCharacters } from "@/services/list";
+import React, { useEffect, useState } from "react";
+import { FlatList, Image, StyleSheet, Text, View} from "react-native";
+
+interface Personagem {
+    id: number;
+    name: string;
+    images: [string];
+}
 
 export default function Home(){
-    const [name, setName] = useState(''); //USESTATE DO NOME
-    const altura = Number(name);
-    const [nome, setNome] = useState('');
-    const peso = Number(nome);
-    const imc = peso / (altura*altura);
-    return (
-        <View style={styles.body}>
-            <TextInput placeholder="Digite altura"
-            onChangeText={setName}/>
-            <TextInput placeholder="Digite peso"
-            onChangeText={setNome}/>
-            <Text style={styles.title}>
-             {name}
-            </Text>
-            <Text>
-            {nome}<br/>
-            </Text>
-            <Text>
-            {imc}
-            </Text>
+    const [personagens, setPersonagens] = useState<Personagem[]>([]);
+
+    useEffect(() => {
+        async function carregarPersonagens() {
+            const dados = await fetchCharacters();
+            setPersonagens(dados.characters);
+        }
+
+        carregarPersonagens();
+    }, []);
+
+    return(
+        <View>
+            <Text>Lista de Personagens</Text>
+            <FlatList
+            data={personagens}
+            keyExtractor={item => item.id.toString()}
+            renderItem={({item}) => (
+                <View>
+                    <Image source={{uri: item.images[0]}}/>
+                    <Text>{item.id} {item.name}</Text>
+                </View>
+            )}
+            />
         </View>
     );
 }
